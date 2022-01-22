@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mt-5">
+                <div class="header text-center">
+                    <h2>Record</h2>
+                </div>
+                <div class=form-group>
+                    <label for="username">First Name</label>
+                    <input type="name" class="form-control" id="username" placeholder="First name">
+                </div>
+                <div class=form-group>
+                    <label for="lastname">Last Name</label>
+                    <input type="name" class="form-control" id="lastname" placeholder="Last name">
+                </div>
+                <div class="form-group">
+                    <label for="Email">Email Address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="Password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+                <div class="form-group pl-3">
+                    <input type="checkbox" class="form-check-input">
+                    <label for="Check" class="form-check-label" id="Check">Check me out</label>
+                </div>
+                <button class="btn btn-primary" onclick="kayit()">Submit</button>
+            </div>
+
+            <div class="col-md-6 mt-5 pt-5  ">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Adı</th>
+                            <th>Soyadı</th>
+                            <th>E-posta</th>
+                            <th>Şifre</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody id="content">
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script>
+        let List = [];
+
+        function sec(id) {
+            return document.getElementById(id)
+        }
+
+        function kayit() {
+            const username = sec("username").value;
+            const lastname = sec("lastname").value
+            const email = sec("email").value;
+            const password = sec("password").value;
+            List.push({
+                adi: username,
+                soyadi: lastname,
+                eposta: email,
+                sifre: password
+            });
+            this.getAll();
+        }
+
+        function getAll() {
+            let html = "";
+            List.forEach(function(kullanici) {
+                html += " <tr>" +
+                    "<td>" + kullanici.adi + "</th>" +
+                    "<td>" + kullanici.soyadi + "</td>" +
+                    "<td>" + kullanici.eposta + "</td>" +
+                    "<td>" + kullanici.sifre + "</td>" +
+                    "<td>" +
+                    "<button class='btn btn-primary mr-1 btn-sm' >Düzenle</button>" +
+                    "<button class='btn btn-danger btn-sm'>Sil</button>" +
+                    "</td>" +
+                    "</tr>";
+            })
+            sec('content').innerHTML = html;
+        }
+    </script>
+
+</body>
+
+</html>
