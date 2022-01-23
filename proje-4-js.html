@@ -14,32 +14,32 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-6 mt-5">
+            <form class="col-md-6 mt-5">
                 <div class="header text-center">
                     <h2>Record</h2>
                 </div>
                 <div class=form-group>
                     <label for="username">First Name</label>
-                    <input type="name" class="form-control" id="username" placeholder="First name">
+                    <input type="name" class="form-control" id="username" placeholder="First name" minlength="2" required>
                 </div>
                 <div class=form-group>
                     <label for="lastname">Last Name</label>
-                    <input type="name" class="form-control" id="lastname" placeholder="Last name">
+                    <input type="name" class="form-control" id="lastname" placeholder="Last name" minlength="2" required>
                 </div>
                 <div class="form-group">
                     <label for="Email">Email Address</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter email">
+                    <input type="email" class="form-control" id="email" placeholder="Enter email" minlength="2" required>
                 </div>
                 <div class="form-group">
                     <label for="Password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password">
+                    <input type="password" class="form-control" id="password" placeholder="Password" minlength="2" required>
                 </div>
                 <div class="form-group pl-3">
                     <input type="checkbox" class="form-check-input">
                     <label for="Check" class="form-check-label" id="Check">Check me out</label>
                 </div>
-                <button class="btn btn-primary" onclick="kayit()">Submit</button>
-            </div>
+                <button class="btn btn-primary" type="submit" onclick="kayit()">Submit</button>
+            </form>
 
             <div class="col-md-6 mt-5 pt-5  ">
                 <table class="table">
@@ -67,6 +67,7 @@
 
     <script>
         let List = [];
+
 
         function sec(id) {
             return document.getElementById(id)
@@ -101,6 +102,20 @@
                     "</tr>";
             })
             sec('content').innerHTML = html;
+        }
+
+        function kayit() {
+            var username, surname, password, email;
+            username = document.getElementById("username").value.length;
+            surnamne = document.getElementById("surname").value.length;
+            password = document.getElementById("password").value.length;
+            email = document.getElementById("email").value.length;
+
+            // Kullanıcı adı ve Soyadı girilmemişse
+            if (username == 0 || surname == 0) {
+                text = "Adinizi ve Soyadinizi Boş Bırakilmaz";
+            }
+
         }
     </script>
 
