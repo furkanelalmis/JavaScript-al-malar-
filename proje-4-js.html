@@ -14,7 +14,7 @@
 <body>
     <div class="container">
         <div class="row">
-            <form class="col-md-6 mt-5">
+            <form class="col-md-6 mt-5" id="formItem" onsubmit="return false ">
                 <div class="header text-center">
                     <h2>Record</h2>
                 </div>
@@ -38,11 +38,11 @@
                     <input type="checkbox" class="form-check-input">
                     <label for="Check" class="form-check-label" id="Check">Check me out</label>
                 </div>
-                <button class="btn btn-primary" type="submit" onclick="kayit()">Submit</button>
+                <button class="btn btn-primary" type="submit" value="Reset form">Kaydet</button>
             </form>
 
             <div class="col-md-6 mt-5 pt-5  ">
-                <table class="table">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Adı</th>
@@ -53,6 +53,11 @@
                         </tr>
                     </thead>
                     <tbody id="content">
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                Henüz hiç kayıt yok
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
 
@@ -67,7 +72,7 @@
 
     <script>
         let List = [];
-
+        let editItem = null;
 
         function sec(id) {
             return document.getElementById(id)
@@ -75,16 +80,48 @@
 
         function kayit() {
             const username = sec("username").value;
-            const lastname = sec("lastname").value
+            const lastname = sec("lastname").value;
             const email = sec("email").value;
             const password = sec("password").value;
             List.push({
+                id: List.length + 1,
                 adi: username,
                 soyadi: lastname,
                 eposta: email,
                 sifre: password
             });
-            this.getAll();
+            getAll();
+            sec("formItem").reset();
+        }
+
+        function duzenle() {
+            const editIndex = List.findIndex(r => r.id === editItem.id);
+            List[editIndex].adi = sec("username").value;
+            List[editIndex].soyadi = sec("lastname").value;
+            List[editIndex].eposta = sec("email").value;
+            List[editIndex].sifre = sec("password").value;
+
+            getAll();
+            editItem = null;
+            sec("formItem").reset();
+
+        }
+
+        function elemanDüzenle(elemanId) {
+            editItem = List.find(r => r.id === elemanId);
+            sec("username").value = editItem.adi;
+            sec("lastname").value = editItem.soyadi;
+            sec("email").value = editItem.eposta;
+            sec("password").value = editItem.sifre;
+        }
+
+        function elemanSil(elemanId) {
+            if (confirm("Elemanı silmek istediğinize emin misiniz ?")) {
+                const itemIndex = List.findIndex(eleman => eleman.id == elemanId);
+                List.splice(itemIndex, 1);
+                getAll();
+            }
+            editItem
         }
 
         function getAll() {
@@ -96,27 +133,23 @@
                     "<td>" + kullanici.eposta + "</td>" +
                     "<td>" + kullanici.sifre + "</td>" +
                     "<td>" +
-                    "<button class='btn btn-primary mr-1 btn-sm' >Düzenle</button>" +
-                    "<button class='btn btn-danger btn-sm'>Sil</button>" +
+                    "<button class='btn btn-primary mr-1 btn-sm'  onClick='elemanDüzenle(" + kullanici.id + ")' >Düzenle</button>" +
+                    "<button class='btn btn-danger btn-sm' onClick='elemanSil(" + kullanici.id + ")'>Sil</button>" +
                     "</td>" +
                     "</tr>";
             })
             sec('content').innerHTML = html;
+
+
         }
-
-        function kayit() {
-            var username, surname, password, email;
-            username = document.getElementById("username").value.length;
-            surnamne = document.getElementById("surname").value.length;
-            password = document.getElementById("password").value.length;
-            email = document.getElementById("email").value.length;
-
-            // Kullanıcı adı ve Soyadı girilmemişse
-            if (username == 0 || surname == 0) {
-                text = "Adinizi ve Soyadinizi Boş Bırakilmaz";
+        const formElemani = sec('formItem');
+        formElemani.addEventListener("submit", () => {
+            if (editItem) {
+                duzenle();
+            } else {
+                kayit();
             }
-
-        }
+        }, false); //Modern browsers
     </script>
 
 </body>
